@@ -96,7 +96,7 @@ const buildSimpleHandlers = () => {
       }
     ],
     [
-      ['lolik', 'pomidor', 'tomato', 'պոմիդոր', 'լոլիկ'],
+      ['lolik', 'pomidor', 'tomato', 'պոմիդոր', 'լոլիկ', '🍅'],
       async (message) => {
         await message.reply("ֆաք 🍅")
       }
@@ -145,18 +145,18 @@ const handlers = buildSimpleHandlers();
 
 const handleMessage = async (message) => {
   const content = message.content;
-
-  await Promise.all(handlers.filter(item => {
-    const [ match ] = item;
-    return match(content);
-  }).map(item => {
-    const [ , handle ] = item;
-    try {
+  try {
+    await Promise.all(handlers.filter(item => {
+      const [ match ] = item;
+      return match(content);
+    }).map(item => {
+      const [ , handle ] = item;
       return handle(message);
-    } catch (e) {
-      console.log(e)
-    }
-  }));
+    }));
+  } catch (e) {
+    console.log(e);
+  }
+
 }
 
 module.exports = handleMessage;
