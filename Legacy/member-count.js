@@ -1,5 +1,5 @@
 // authenticates you with the API standard library
-const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
+const lib = require('Lib')({token: process.env.STDLIB_SECRET_TOKEN});
 
 let members;
 try {

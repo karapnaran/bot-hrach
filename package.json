@@ -1,5 +1,27 @@
 {
-    "dependencies": {
-        "discord.js": "^14.7.1"
-    }  
+  "name": "bot-hrach",
+  "version": "1.0.0",
+  "description": "Suppots advanced commands such as /pupulachap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karapnaran/bot-hrach.git"
+  },
+  "keywords": [],
+  "author": "kughb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karapnaran/bot-hrach/issues"
+  },
+  "homepage": "https://github.com/karapnaran/bot-hrach#readme",
+  "dependencies": {
+    "discord.js": "^14.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
 }

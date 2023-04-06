@@ -1,6 +1,5 @@
 const BOT_USER_ID = 894153328353759243;
 
-
 function getPupul(userId) {
     if (userId == BOT_USER_ID) {
         return ['Հրաչի պուպուլը\`', 'https://imgur.com/a/sMcThzv'];
