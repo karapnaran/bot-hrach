@@ -2,7 +2,7 @@ const BOT_USER_ID = 894153328353759243;
 
 function getPupul(userId) {
     if (userId == BOT_USER_ID) {
-        return ['Հրաչի պուպուլը\`', 'https://imgur.com/a/sMcThzv'];
+        return ['Հրաչի պուպուլը\`', 'https://imgur.com/HmgZq6E'];
     }
 
     let pupul_len = Math.floor(Math.random() * 20);
