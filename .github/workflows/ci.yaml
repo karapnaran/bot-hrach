@@ -1,0 +1,28 @@
+name: Deploy from Master
+
+#on:
+#  push:
+#    branches:
+#      - master
+#      - migrate-legacy-to-discordjs
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to DigitalOcean Droplet
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USERNAME}}
+          key: ${{secrets.KEY}}
+          script: |
+            cd bot-hrach
+            pm2 stop ecosystem.config.js
+            git stash
+            git checkout master
+            git pull
+            git stash pop
+            npm i --production
+            pm2 start ecosystem.config.js
+            pm2 save

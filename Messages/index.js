@@ -114,6 +114,24 @@ const buildSimpleHandlers = () => {
           await message.react('🤬')
         ])
       }
+    ],
+    [
+      (text) => text === '/tusbomb',
+      async (message) => {
+        const tus = [
+          'https://media.discordapp.net/attachments/1093110043886485574/1093156901182767175/message.png?width=900&height=198',
+          'https://media.discordapp.net/attachments/1093110043886485574/1094003918910005340/message.png?width=900&height=140',
+          'https://media.discordapp.net/attachments/1093110043886485574/1094003958588133496/message.png?width=900&height=140',
+          'https://media.discordapp.net/attachments/1093110043886485574/1094004003752394882/message.png?width=900&height=204',
+          'https://media.discordapp.net/attachments/1093110043886485574/1094004108740001852/message.png?width=900&height=140'
+        ];
+        let response = '';
+        tus.forEach(link => {
+          response += link;
+          response += '\n';
+        })
+        await message.reply('sooooon ™')
+      }
     ]
   ];
 
