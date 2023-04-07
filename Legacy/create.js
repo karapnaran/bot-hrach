@@ -1,5 +1,5 @@
 // authenticates you with the API standard library
-const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
+const lib = require('Lib')({token: process.env.STDLIB_SECRET_TOKEN});
 
 //TODO rename
 const matcher = (...args) => {
@@ -162,7 +162,7 @@ if (context.params.event.content.match(/(?<=^|\P{L})(\.)(?=\P{L}|$)/)){
 
 //ավելի նորմալ ձև կգրեմ հետո, կամ էլ չէ, եսիմ
 // Only respond to messages containing "միբան", "միբան?", "miban", "miban?" or "jackbox?", "jackbox", "ջեքբոքս", "ջեքբոքս?"
-if (context.params.event.content.match(/(?<=^|\P{L})(միբան|միբան\?|miban|miban\?|jackbox\?|ջեքբոքս\?|jackbox|ջեքբոքս)(?=\P{L}|$)/)){
+  if (context.params.event.content.match(/(?<=^|\P{L})(միբան|միբան\?|miban|miban\?|jackbox\?|ջեքբոքս\?|jackbox|ջեքբոքս)(?=\P{L}|$)/)){
   let result = await lib.discord.channels['@0.2.0'].messages.reactions.create({
     emoji: `➕`,
     message_id: `${context.params.event.id}`,

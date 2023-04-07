@@ -3,6 +3,7 @@ const { Client, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { ActivityType } = require('discord.js');
 const { getPupul } = require('./Helpers');
+const MessageHandler = require('./Messages');
 
 // Create a new client instance
 const client = new Client({
@@ -24,13 +25,15 @@ client.once(Events.ClientReady, c => {
     c.user.setActivity('Belly Music', { type: ActivityType.Playing });
 
     // handle messages
-    c.on('messageCreate', (message) => {
+    c.on('messageCreate', async (message) => {
         if (message.author.bot) {
             return;
         }
-        if (message.content === 'miban') {
-            message.reply('miban');
-        }
+
+        await MessageHandler(message);
+        // if (message.content === 'miban') {
+        //     message.reply('miban');
+        // }
     })
 
     // handle commands
@@ -38,18 +41,11 @@ client.once(Events.ClientReady, c => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'pupulachap') {
-            console.log(interaction);
+            const user = interaction.options.get('user');
+            const id = user.value;
+            const content = getPupul(id);
 
-            const userId = 894153328353759243;
-            // userId = interaction.user.id ??? 
-
-            const content = getPupul(userId);
-            interaction.reply(content);
+            interaction.reply(`<@${id}>` + '-ի պուպուլը ՝ \n \n' + content);
         }
-
-        //       if (interaction.commandName === 'ping') {
-        //           await interaction.reply({ content: 'Secret Pong!', ephemeral: true });
-        //       };
-
     });
 });
