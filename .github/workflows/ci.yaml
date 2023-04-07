@@ -21,7 +21,7 @@ jobs:
             cd bot-hrach
             pm2 stop ecosystem.config.js
             git stash
-            git checkout master
+            git checkout migrate-legacy-to-discordjs
             git pull
             git stash pop
             npm i --production
