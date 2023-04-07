@@ -46,7 +46,7 @@ const buildSimpleHandlers = () => {
       }
     ],
     [
-      ['միբան','միբան', 'miban', 'miban', 'jackbox', 'ջեքբոքս', 'jackbox', 'ջեքբոքս', 'cs'],
+      ['միբան','միբան', 'miban', 'miban', 'jackbox', 'ջեքբոքս', 'jackbox', 'ջեքբոքս', 'cs', 'ցս', 'fortnite', 'ֆորթնայթ'],
       async (message) => {
         return Promise.all([
           await message.react('➕'),

@@ -1,10 +1,10 @@
 name: Deploy from Master
+run-name: "Deploy from Master"
 
 on:
   push:
     branches:
       - master
-      - migrate-legacy-to-discordjs
 
 jobs:
   deploy:

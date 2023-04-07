@@ -41,9 +41,6 @@ client.once(Events.ClientReady, c => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'pupulachap') {
-            // const userId = 894153328353759243;
-            // const userId = interaction.user.id;
-
             const user = interaction.options.get('user');
             const id = user.value;
             const content = getPupul(id);
