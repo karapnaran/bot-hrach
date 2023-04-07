@@ -9,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    name: Deploy from master
     steps:
       - name: Deploy to DigitalOcean Droplet
         uses: appleboy/ssh-action@master
