@@ -8,7 +8,7 @@ module.exports = {
       name: "scrape-tus",
       script: "./Scripts/scrapeTusMoments.js",
       cron_restart: "*/30 * * * *",
-      autorestart: true
+      autorestart: false
     }
   ],
 };
