@@ -118,19 +118,17 @@ const buildSimpleHandlers = () => {
     [
       (text) => text === '/tusbomb',
       async (message) => {
-        const tus = [
-          'https://media.discordapp.net/attachments/1093110043886485574/1093156901182767175/message.png?width=900&height=198',
-          'https://media.discordapp.net/attachments/1093110043886485574/1094003918910005340/message.png?width=900&height=140',
-          'https://media.discordapp.net/attachments/1093110043886485574/1094003958588133496/message.png?width=900&height=140',
-          'https://media.discordapp.net/attachments/1093110043886485574/1094004003752394882/message.png?width=900&height=204',
-          'https://media.discordapp.net/attachments/1093110043886485574/1094004108740001852/message.png?width=900&height=140'
-        ];
+        const tusMoments = require('../tus.json');
+        const shuffled = tusMoments.sort(() => 0.5 - Math.random());
+        const tus = shuffled.slice(0, 5);
+
         let response = '';
-        tus.forEach(link => {
-          response += link;
+        tus.forEach(message => {
+          response += message.attachment;
           response += '\n';
-        })
-        await message.reply('sooooon ™')
+        });
+
+        await message.reply(response);
       }
     ]
   ];
