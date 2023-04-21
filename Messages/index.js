@@ -55,7 +55,7 @@ const buildSimpleHandlers = () => {
       }
     ],
     [
-      ['gm', 'գմ'],
+      ['gm', 'գմ', 'gmgm', 'գմգմ՛],
       async (message) => {
         return Promise.all([
           await message.react('🇬'),
@@ -65,7 +65,7 @@ const buildSimpleHandlers = () => {
       }
     ],
     [
-      ['bg', 'gn', 'բգ', 'բգ'],
+      ['bg', 'gn', 'բգ', 'բգ', 'gngn', 'գնգն', 'գն'],
       async (message) => {
         return Promise.all([
           await message.react('🇬'),
