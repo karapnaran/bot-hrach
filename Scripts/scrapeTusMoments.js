@@ -35,5 +35,6 @@ client.once(Events.ClientReady, c => {
     //TODO check timestamps in TusMoments... :3
     fs.writeFileSync(__dirname + '/../tus.json', JSON.stringify(tusMomentArray));
     client.destroy();
+    process.exit(0);
   })
 });
