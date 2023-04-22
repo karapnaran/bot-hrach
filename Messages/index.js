@@ -65,7 +65,7 @@ const buildSimpleHandlers = () => {
       }
     ],
     [
-      ['bg', 'gn', 'բգ', 'բգ', 'gngn', 'գնգն', 'գն'],
+      ['bg', 'gn', 'բգ', 'gngn', 'գնգն', 'գն', 'bgbg', 'բգբգ'],
       async (message) => {
         return Promise.all([
           await message.react('🇬'),
