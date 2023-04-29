@@ -1,5 +1,7 @@
 const { matcher } = require("../Lib");
 const AT_CS = "<@&555400264790835230>";
+const AT_DOTA = "<@&651841632286670869>";
+const AT_BR = "<@&456441520351084550>";
 
 const buildSimpleHandlers = () => {
   const mapping = [
@@ -47,7 +49,7 @@ const buildSimpleHandlers = () => {
       }
     ],
     [
-      ['միբան','միբան', 'miban', 'miban', 'jackbox', 'ջեքբոքս', 'jackbox', 'ջեքբոքս', 'cs', 'ցս', 'fortnite', 'ֆորթնայթ', '@Ցս', 'dota', 'դոտա', AT_CS],
+      ['միբան','միբան', 'miban', 'miban', 'jackbox', 'ջեքբոքս', 'jackbox', 'ջեքբոքս', 'cs', 'ցս', 'fortnite', 'ֆորթնայթ', '@Ցս', 'dota', 'դոտա', AT_CS, AT_DOTA, AT_BR],
       async (message) => {
         return Promise.all([
           await message.react('➕'),
