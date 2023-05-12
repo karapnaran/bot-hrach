@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
-const { Client, Events, GatewayIntentBits } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource } = require('@discordjs/voice');
+const { Client, Events, GatewayIntentBits, User, Guild, ChannelType, ConnectionService } = require('discord.js');
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 
 const { token } = require('./config.json');
 const { ActivityType } = require('discord.js');
@@ -20,6 +20,9 @@ const client = new Client({
     ],
 });
 
+let connection;
+let queue = [];
+
 // Log in to Discord with your client's token
 client.login(token);
 
@@ -37,27 +40,76 @@ client.once(Events.ClientReady, c => {
 
         await MessageHandler(message);
 
-        if(message.author.username === 'Tiko') {
-            if(!message.content === 'Chandelier') {
-                return;
-            }
-            const channel = message.guild.channels.cache.find(channel => channel.name === 'Ցսիվ վոյս չաննել');
+        let messageContent = message.content.split(" ");
 
-            const connection = joinVoiceChannel({
-                channelId: channel.id,
-                guildId: channel.guild.id,
-                adapterCreator: channel.guild.voiceAdapterCreator,
+
+        let command = messageContent[0];
+        let query = messageContent.slice(1).join(" ");
+
+
+        if (command === '::sing') {
+
+            const userId = message.author.id;
+
+            const channel = message.guild.channels.cache.find(channel => {
+                return channel.type === ChannelType.GuildVoice
+                    && channel.members.find(member => member.id === userId);
+            });
+            console.log(channel);
+
+            if (!connection) {
+                connection = joinVoiceChannel({
+                    channelId: channel.id,
+                    guildId: channel.guild.id,
+                    adapterCreator: channel.guild.voiceAdapterCreator,
+                });
+            }
+
+            const videos = await ytsr(query || "Sia Chandelier", { pages: 1 });
+            const firstVideo = videos.items[0];
+            queue.push(firstVideo.url);
+
+            if (player.state.status == AudioPlayerStatus.Idle) {
+                const stream = getAudioStream(queue[0]);
+                const resource = createAudioResource(stream);
+                player.play(resource);
+                queue.shift();
+            }
+
+
+            player.on(AudioPlayerStatus.Idle, () => {
+                if (!queue.length) return;
+
+                const stream = getAudioStream(queue[0]);
+                const resource = createAudioResource(stream);
+                player.play(resource);
+                queue.shift();
             });
 
-            const videos = await ytsr('Sia chandelier', { pages: 1 });
-            const first = videos.items[0];
-            const stream = getAudioStream(first.url);
-            const resource = createAudioResource(stream);
-
             connection.subscribe(player);
-            player.play(resource);
-
         }
+
+        else {
+            switch (command) {
+                case '::pause':
+                    player.pause();
+                    break;
+                case '::play':
+                    player.unpause();
+                    break;
+                case '::skip':
+                    player.stop();
+                    break;
+                case '::leave':
+                    !connection ? message.reply('Gtfo') : connection.destroy();
+                    connection = undefined;
+                    player.stop();
+                    queue = [];
+                    break;
+            }
+        }
+
+        // legacy
         // if (message.content === 'miban') {
         //     message.reply('miban');
         // }
