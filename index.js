@@ -42,20 +42,16 @@ client.once(Events.ClientReady, c => {
 
         let messageContent = message.content.split(" ");
 
-
         let command = messageContent[0];
         let query = messageContent.slice(1).join(" ");
 
-
         if (command === '::sing') {
-
             const userId = message.author.id;
 
             const channel = message.guild.channels.cache.find(channel => {
                 return channel.type === ChannelType.GuildVoice
                     && channel.members.find(member => member.id === userId);
             });
-            console.log(channel);
 
             if (!connection) {
                 connection = joinVoiceChannel({
@@ -66,7 +62,7 @@ client.once(Events.ClientReady, c => {
             }
 
             const videos = await ytsr(query || "Sia Chandelier", { pages: 1 });
-            const firstVideo = videos.items[0];
+            const firstVideo = videos.find(video => video.url);
             queue.push(firstVideo.url);
 
             if (player.state.status == AudioPlayerStatus.Idle) {
