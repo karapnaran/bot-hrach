@@ -175,7 +175,6 @@ const handleMessage = async (message) => {
   } catch (e) {
     console.log(e);
   }
-
 }
 
 module.exports = handleMessage;
