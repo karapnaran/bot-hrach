@@ -1,13 +1,12 @@
 // Require the necessary discord.js classes
-const { Client, Events, GatewayIntentBits, User, Guild, ChannelType, ConnectionService } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
+const { Client, Events, GatewayIntentBits } = require('discord.js');
+const { createAudioPlayer } = require('@discordjs/voice');
 
 const { token } = require('./config.json');
 const { ActivityType } = require('discord.js');
 const { getPupul } = require('./Helpers');
 const MessageHandler = require('./Messages');
 const VoiceCommandHandler = require('./VoiceCommands');
-const player = createAudioPlayer();
 
 // Create a new client instance
 const client = new Client({
@@ -19,9 +18,6 @@ const client = new Client({
         GatewayIntentBits.GuildVoiceStates
     ],
 });
-
-let connection;
-let queue = [];
 
 // Log in to Discord with your client's token
 client.login(token);
@@ -59,10 +55,3 @@ client.once(Events.ClientReady, c => {
         }
     });
 });
-
-const ytdl = require('ytdl-core');
-const ytsr = require('ytsr');
-
-function getAudioStream(url) {
-    return ytdl(url, { filter: 'audioonly' });
-}

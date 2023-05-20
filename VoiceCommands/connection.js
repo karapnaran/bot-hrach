@@ -19,7 +19,6 @@ function connection(player, queue) {
           adapterCreator: channel.guild.voiceAdapterCreator,
         });
 
-
         connection.on(VoiceConnectionStatus.Disconnected, async () => {
           try {
             await Promise.race([
