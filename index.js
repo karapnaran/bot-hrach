@@ -1,6 +1,6 @@
 // Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits, User, Guild, ChannelType, ConnectionService } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
 
 const { token } = require('./config.json');
 const { ActivityType } = require('discord.js');
@@ -59,10 +59,21 @@ client.once(Events.ClientReady, c => {
                     guildId: channel.guild.id,
                     adapterCreator: channel.guild.voiceAdapterCreator,
                 });
+                connection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
+                    try {
+                        await Promise.race([
+                            entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
+                            entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
+                        ]);
+                    } catch (error) {
+                        connection.destroy();
+                        connection = undefined;
+                    }
+                });
             }
 
             const videos = await ytsr(query || "Sia Chandelier", { pages: 1 });
-            const firstVideo = videos.find(video => video.url);
+            const firstVideo = videos.items.find(video => video.url);
             queue.push(firstVideo.url);
 
             if (player.state.status == AudioPlayerStatus.Idle) {
