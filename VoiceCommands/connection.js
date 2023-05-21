@@ -11,8 +11,13 @@ function connection(player, queue) {
       connection = this.createConnectionIfNotExists(channel);
       return this;
     },
+    destroy() {
+      if(connection && connection.state.status !== VoiceConnectionStatus.Destroyed) {
+        connection.destroy();
+      }
+    },
     createConnectionIfNotExists(channel) {
-      if (!connection || connection.state.status === VoiceConnectionStatus.Disconnected) {
+      if (!connection || [VoiceConnectionStatus.Disconnected, VoiceConnectionStatus.Destroyed].includes(connection.state.status)) {
         connection = joinVoiceChannel({
           channelId: channel.id,
           guildId: channel.guild.id,
@@ -26,15 +31,15 @@ function connection(player, queue) {
               entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
             ]);
           } catch (error) {
-            connection.destroy();
+            this.destroy();
             queue.reset();
           }
         });
 
         connection.subscribe(player);
-
-        return connection;
       }
+
+      return connection;
     }
   }
 }

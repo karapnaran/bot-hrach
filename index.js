@@ -1,6 +1,5 @@
 // Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits } = require('discord.js');
-const { createAudioPlayer } = require('@discordjs/voice');
 
 const { token } = require('./config.json');
 const { ActivityType } = require('discord.js');

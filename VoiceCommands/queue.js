@@ -7,25 +7,34 @@ function queue(player) {
   return {
     addToQueue(video) {
       queue.push(video);
-      if (player.state.status === AudioPlayerStatus.Idle) {
-        this.playNextInQueue();
+      if ([AudioPlayerStatus.Idle, AudioPlayerStatus.AutoPaused].includes(player.state.status)) {
+        this.playCurrentInQueue();
       }
     },
     reset() {
       queue = []
     },
-    playNextInQueue() {
+    playCurrentInQueue() {
+      if(!queue.length) return;
+
       const stream = getAudioStreamFromUrl(queue[0].url);
-      console.log(queue[0]);
       const resource = createAudioResource(stream);
       player.play(resource);
-      queue.shift();
     },
     registerPlayerWatchers() {
       player.on(AudioPlayerStatus.Idle, () => {
         if (!queue.length) return;
-        this.playNextInQueue()
+        queue.shift();
+        this.playCurrentInQueue()
       });
+    },
+    showQueue() {
+      if(queue.length) {
+        return queue.reduce((prev, cur, index) => {
+          return prev + `\n${index + 1}: ${cur.title}`;
+        }, '');
+      }
+      return "Queue is empty";
     }
   }
 }

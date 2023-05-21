@@ -5,11 +5,12 @@ const createQueue = require('./queue');
 const createConnection = require('./connection');
 
 const COMMANDS = {
-  PLAY: "::play",
-  PAUSE: "::pause",
-  UNPAUSE: "::unpause",
-  SKIP: "::skip",
-  LEAVE: "::leave"
+  PLAY: "..play",
+  PAUSE: "..pause",
+  UNPAUSE: "..unpause",
+  SKIP: "..skip",
+  LEAVE: "..leave",
+  QUEUE: "..queue"
 }
 
 const player = createAudioPlayer();
@@ -36,8 +37,12 @@ const handleMessage = async (message) => {
     case COMMANDS.UNPAUSE:
       player.unpause();
       break;
+    case COMMANDS.QUEUE:
+      message.reply(queueManager.showQueue());
+      break;
     case COMMANDS.LEAVE:
-      connectionManager.getConnection().destroy();
+      player.stop();
+      connectionManager.destroy();
       queueManager.reset();
       break;
   }
