@@ -5,12 +5,12 @@ const createQueue = require('./queue');
 const createConnection = require('./connection');
 
 const COMMANDS = {
-  PLAY: "..play",
-  PAUSE: "..pause",
-  UNPAUSE: "..unpause",
-  SKIP: "..skip",
-  LEAVE: "..leave",
-  QUEUE: "..queue"
+  PLAY: "::play",
+  PAUSE: "::pause",
+  UNPAUSE: "::unpause",
+  SKIP: "::skip",
+  LEAVE: "::leave",
+  QUEUE: "::queue"
 }
 
 const player = createAudioPlayer();
