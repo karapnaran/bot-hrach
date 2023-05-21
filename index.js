@@ -1,13 +1,11 @@
 // Require the necessary discord.js classes
-const { Client, Events, GatewayIntentBits, User, Guild, ChannelType, ConnectionService } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
+const { Client, Events, GatewayIntentBits } = require('discord.js');
 
 const { token } = require('./config.json');
 const { ActivityType } = require('discord.js');
 const { getPupul } = require('./Helpers');
 const MessageHandler = require('./Messages');
-
-const player = createAudioPlayer();
+const VoiceCommandHandler = require('./VoiceCommands');
 
 // Create a new client instance
 const client = new Client({
@@ -19,9 +17,6 @@ const client = new Client({
         GatewayIntentBits.GuildVoiceStates
     ],
 });
-
-let connection;
-let queue = [];
 
 // Log in to Discord with your client's token
 client.login(token);
@@ -39,83 +34,7 @@ client.once(Events.ClientReady, c => {
         }
 
         await MessageHandler(message);
-
-        let messageContent = message.content.split(" ");
-
-        let command = messageContent[0];
-        let query = messageContent.slice(1).join(" ");
-
-        if (command === '::sing') {
-            const userId = message.author.id;
-
-            const channel = message.guild.channels.cache.find(channel => {
-                return channel.type === ChannelType.GuildVoice
-                    && channel.members.find(member => member.id === userId);
-            });
-
-            if (!connection) {
-                connection = joinVoiceChannel({
-                    channelId: channel.id,
-                    guildId: channel.guild.id,
-                    adapterCreator: channel.guild.voiceAdapterCreator,
-                });
-                connection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
-                    try {
-                        await Promise.race([
-                            entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
-                            entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
-                        ]);
-                    } catch (error) {
-                        connection.destroy();
-                        connection = undefined;
-                    }
-                });
-            }
-
-            const videos = await ytsr(query || "Sia Chandelier", { pages: 1 });
-            const firstVideo = videos.items.find(video => video.url);
-            queue.push(firstVideo.url);
-
-            if (player.state.status == AudioPlayerStatus.Idle) {
-                const stream = getAudioStream(queue[0]);
-                const resource = createAudioResource(stream);
-                player.play(resource);
-                queue.shift();
-            }
-
-
-            player.on(AudioPlayerStatus.Idle, () => {
-                if (!queue.length) return;
-
-                const stream = getAudioStream(queue[0]);
-                const resource = createAudioResource(stream);
-                player.play(resource);
-                queue.shift();
-            });
-
-            connection.subscribe(player);
-        }
-
-        else {
-            switch (command) {
-                case '::pause':
-                    player.pause();
-                    break;
-                case '::play':
-                    player.unpause();
-                    break;
-                case '::skip':
-                    player.stop();
-                    break;
-                case '::leave':
-                    !connection ? message.reply('Gtfo') : connection.destroy();
-                    connection = undefined;
-                    player.stop();
-                    queue = [];
-                    break;
-            }
-        }
-
+        await VoiceCommandHandler(message);
         // legacy
         // if (message.content === 'miban') {
         //     message.reply('miban');
@@ -135,10 +54,3 @@ client.once(Events.ClientReady, c => {
         }
     });
 });
-
-const ytdl = require('ytdl-core');
-const ytsr = require('ytsr');
-
-function getAudioStream(url) {
-    return ytdl(url, { filter: 'audioonly', format: 'webm' });
-}
