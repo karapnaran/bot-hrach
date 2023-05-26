@@ -35,6 +35,10 @@ client.once(Events.ClientReady, c => {
 
         await MessageHandler(message);
         await VoiceCommandHandler(message);
+        if (message.content === '::restart') {
+            await message.reply("restarting");
+            process.exit(0);
+        }
         // legacy
         // if (message.content === 'miban') {
         //     message.reply('miban');
