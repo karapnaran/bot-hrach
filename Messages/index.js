@@ -2,6 +2,7 @@ const { matcher } = require("../Lib");
 const AT_CS = "<@&555400264790835230>";
 const AT_DOTA = "<@&651841632286670869>";
 const AT_BR = "<@&456441520351084550>";
+const AT_DEADLOCK = "<@&1286419763328847922>";
 
 const buildSimpleHandlers = () => {
   const mapping = [
@@ -22,19 +23,19 @@ const buildSimpleHandlers = () => {
           'էն օրը '
         ];
         const tegher = [
-          'տանը ',
-          'ջիմում '
+          'տանը '
+          //'ջիմում '
         ];
         const text = orer[Math.floor(Math.random()*orer.length)]+
           tegher[Math.floor(Math.random()*tegher.length)]+
           'կշռվեցի '+
-          (Math.floor(Math.random() * (105 - 79) + 79)).toString() + ' կիլո էի';
+          (Math.floor(Math.random() * (110 - 79) + 79)).toString() + ' կիլո էի';
 
         await message.reply(text);
       }
     ],
     [
-      ['tonratun', 'qyabab', 'kebab', 'pizza', 'burger', 'lahmajo', 'lahmacun', 'shawarma', 'grill.am', 'քյաբաբ','պիցցա','բուրգեր','լահմաջո','շաուրմա','գրիլլ․ամ','թոնրատուն'],
+      ['tonratun', 'qyabab', 'kebab', 'pizza', 'burger', 'lahmajo', 'lahmacun', 'shawarma', 'grill.am', 'byblos', 'քյաբաբ','պիցցա','բուրգեր','լահմաջո','շաուրմա','գրիլլ․ամ','թոնրատուն', 'բիբլոս'],
       'կաինավ'
     ],
     [
@@ -49,7 +50,7 @@ const buildSimpleHandlers = () => {
       }
     ],
     [
-      ['միբան','միբան', 'miban', 'miban', 'jackbox', 'ջեքբոքս', 'jackbox', 'ջեքբոքս', 'cs', 'ցս', 'fortnite', 'ֆորթնայթ', '@Ցս', 'dota', 'դոտա', AT_CS, AT_DOTA, AT_BR],
+      ['միբան','միբան', 'miban', 'miban', 'jackbox', 'ջեքբոքս', 'jackbox', 'ջեքբոքս', 'cs', 'ցս', 'fortnite', 'ֆորթնայթ', '@Ցս', 'dota', 'դոտա', 'deadlock', 'դեդլոք', AT_CS, AT_DOTA, AT_BR, AT_DEADLOCK],
       async (message) => {
         return Promise.all([
           await message.react('➕'),
