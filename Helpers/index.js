@@ -2,7 +2,7 @@ const BOT_USER_ID = 894153328353759243;
 
 function getPupul(userId) {
     if (userId == BOT_USER_ID) {
-        return 'https://imgur.com/HmgZq6E';
+        return 'https://cdn.imgchest.com/files/my8xcol38w4.jpg';
     }
 
     let pupul_len = Math.floor(Math.random() * 20);
