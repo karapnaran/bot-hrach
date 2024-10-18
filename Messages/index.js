@@ -1,8 +1,4 @@
 const { matcher } = require("../Lib");
-const AT_CS = "<@&555400264790835230>";
-const AT_DOTA = "<@&651841632286670869>";
-const AT_BR = "<@&456441520351084550>";
-const AT_DEADLOCK = "<@&1286419763328847922>";
 
 const buildSimpleHandlers = () => {
   const mapping = [
@@ -47,15 +43,6 @@ const buildSimpleHandlers = () => {
           'բա ախպեր'
         ];
         await message.reply(janaxper[Math.floor(Math.random()*janaxper.length)])
-      }
-    ],
-    [
-      ['միբան','միբան', 'miban', 'miban', 'jackbox', 'ջեքբոքս', 'jackbox', 'ջեքբոքս', 'cs', 'ցս', 'fortnite', 'ֆորթնայթ', '@Ցս', 'dota', 'դոտա', 'deadlock', 'դեդլոք', AT_CS, AT_DOTA, AT_BR, AT_DEADLOCK],
-      async (message) => {
-        return Promise.all([
-          await message.react('➕'),
-          await message.react('➖')
-        ])
       }
     ],
     [
