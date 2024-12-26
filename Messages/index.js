@@ -76,7 +76,7 @@ const buildSimpleHandlers = () => {
     [
       ['նուպոգոդի', 'nupogodi'],
       async (message) => {
-        await message.reply("https://imgur.com/a/iHlw97E")
+        await message.reply("https://i.imgur.com/rZRVFO9.png")
       }
     ],
     [
